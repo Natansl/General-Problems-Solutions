@@ -44,7 +44,7 @@ while inGrid > 0:
                 elif(incCol == 1 and grid[i][j+incCol] == 'O'):
                     nextGrid[i][j+incCol] = val + grid[i][j+incCol]
                     grid[i][j] = 0
-                    grid[i][j+incCol] = 0
+                    grid[i+incCol][j] = 0
                     intact -= 2
                     inGrid -= 2 
                 elif(incCol == -1 and grid[i][j+incCol] == 'L'):
