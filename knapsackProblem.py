@@ -17,7 +17,7 @@ def kspbruteForce(items, capacity):
         solutions.append(__kspBFRecursive__(items, capacity, w, v, i + 1))
     return max(solutions)
 
-def kspGreedy(items,capacity):
+def kspGreedy(items, capacity):
     acc = 0
     solution = 0
     costBenefit = [int(items[i][0]/items[i][1]) for i in range(len(items))]
@@ -31,7 +31,20 @@ def kspGreedy(items,capacity):
             return solution
     return solution
 
+def kspDynProg(items, capacity):
+    m = [[0 for col in range(capacity + 1)] for row in range(len(items) + 1)]
+    for j in range(capacity + 1):
+        m[0][j] = 0
+    for i in range(len(items)):
+        for j in range(capacity + 1):
+            if items[i][1] > j:
+                m[i+1][j] = m[i][j]
+            else:
+                m[i+1][j] = max([m[i][j], m[i][j - items[i][1]] + items[i][0]])
+    return m[len(items)][capacity]
+
 items = [[60, 10], [100, 20], [120, 30]]
 capacity = 50
 print("Bruteforce Exact Solution: " + str(kspbruteForce(items, capacity)))
 print("Greedy Approximation algorithm: " + str(kspGreedy(items, capacity)))
+print("Dynamic Programming Exact Solution: " + str(kspDynProg(items, capacity)))
