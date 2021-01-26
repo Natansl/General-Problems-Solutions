@@ -1,5 +1,5 @@
-from operator import itemgetter
 import math
+from operator import itemgetter
 
 def Prim(G, v):
     V = len(G)
@@ -9,7 +9,7 @@ def Prim(G, v):
     indexes = []
     connected[v-1] = 1
     i = v
-    while (connected.count(0) > 0):
+    while connected.count(0) > 0:
         for j in range(V):
             if j == i:
                 continue
@@ -28,11 +28,37 @@ def Prim(G, v):
             i = indexes[minIndex][1]
         else:
             i = indexes[minIndex][0]
-            
+
         connected[indexes[minIndex][0]] = 1
         connected[indexes[minIndex][1]] = 1
         Gout[indexes[minIndex][0]][indexes[minIndex][1]] = minimum
         Gout[indexes[minIndex][1]][indexes[minIndex][0]] = minimum
         del considered[minIndex]
         del indexes[minIndex]
+    return Gout
+
+def Kruskal(G):
+    V = len(G)
+    connected = [0 for i in range(V)]
+    Gout = [[math.inf for i in range(V)] for j in range(V)]
+    considered = []
+    idx = []
+
+    for i in range(V):
+        for j in range(i+1,V):
+            considered.append(G[i][j])
+            idx.append([i, j])
+
+    indexes, _ = zip(*sorted(enumerate(considered), key=itemgetter(1)))
+    i = 0
+    while connected.count(0) > 0:
+        curri = idx[indexes[i]][0]
+        currj = idx[indexes[i]][1]
+        if not connected[curri] or not connected[currj]:
+            connected[curri] = 1
+            connected[currj] = 1
+            Gout[curri][currj] = considered[indexes[i]]
+            Gout[currj][curri] = considered[indexes[i]]
+        i += 1
+
     return Gout
