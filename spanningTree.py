@@ -8,16 +8,14 @@ def Prim(G, v):
     considered = []
     indexes = []
     connected[v-1] = 1
+    i = v
     while (connected.count(0) > 0):
-        for i in range(V):
-            if not connected[i]:
+        for j in range(V):
+            if j == i:
                 continue
-            for j in range(V):
-                if j == i:
-                    continue
-                if not connected[j]:
-                    considered.append(G[i][j])
-                    indexes.append([i, j])
+            if not connected[j]:
+                considered.append(G[i][j])
+                indexes.append([i, j])
 
         minimum = considered[0]
         minIndex = 0
@@ -25,6 +23,12 @@ def Prim(G, v):
             if considered[k] < minimum and (not connected[i] or not connected[j]):
                 minimum = considered[k]
                 minIndex = k
+
+        if connected[indexes[minIndex][0]]:
+            i = indexes[minIndex][1]
+        else:
+            i = indexes[minIndex][0]
+            
         connected[indexes[minIndex][0]] = 1
         connected[indexes[minIndex][1]] = 1
         Gout[indexes[minIndex][0]][indexes[minIndex][1]] = minimum
