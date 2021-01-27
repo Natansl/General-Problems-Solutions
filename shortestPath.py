@@ -32,6 +32,27 @@ def Dijkstra(G, s):
                 prev[v] = u
 
     return ShortestPath(dist,prev)
+
+def BellmanFord(G, s):
+    length = len(G)
+    dist = prev = []
+    for _ in range(length):
+        dist.append(math.inf)
+        prev.append(-1)
+    dist[s-1] = 0
+
+    for _ in range(length - 1):
+        for u in range(length - 1):
+            for v in range(u + 1, length):
+                if dist[u] + G[u][v] < dist[v]:
+                    dist[v] = dist[u] + G[u][v]
+    
+    for u in range(length - 1):
+            for v in range(u + 1, length):
+                if dist[u] + G[u][v] < dist[v]:
+                    print("ERROR. Graph with negative weight cycle.")
+
+    return ShortestPath(dist,prev)
         
         
 
