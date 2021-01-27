@@ -7,7 +7,10 @@ class ShortestPath(object):
 
 def dijkstra(G, s):
     length = len(G)
-    dist = prev = Q = []
+    dist = []
+    prev = []
+    Q = []
+
     for i in range(length):
         dist.append(math.inf)
         prev.append(-1)
@@ -15,7 +18,8 @@ def dijkstra(G, s):
     dist[s-1] = 0
 
     while len(Q) > 0:
-        aux = indexes = []
+        aux = []
+        indexes = []
         for i in Q:
             aux.append(dist[i])
             indexes.append(i)
@@ -35,7 +39,8 @@ def dijkstra(G, s):
 
 def bellmanFord(G, s):
     length = len(G)
-    dist = prev = []
+    dist = []
+    prev = []
     for _ in range(length):
         dist.append(math.inf)
         prev.append(-1)
@@ -70,6 +75,13 @@ def floydWarshall(G):
 
     return dist
         
+
+G = [[0, 3, 5, 10, 7], [3, 0, 1, 8, 2], [5, 1, 0, 2, 9], [10, 8, 2, 0, 1], [7, 2, 9, 1, 0]]
+v = 1
+
+print("Dijkstra algorithm starting at 1: " + str(dijkstra(G,v).dist))
+print("Bellman-Ford algorithm starting at 1: " + str(bellmanFord(G,v).dist))
+print("Floyd-Warshall algorithm: " + str(floydWarshall(G)))
         
 
 
