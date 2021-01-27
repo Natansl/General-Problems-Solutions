@@ -5,7 +5,7 @@ class ShortestPath(object):
         self.dist = dist
         self.prev = prev 
 
-def Dijkstra(G, s):
+def dijkstra(G, s):
     length = len(G)
     dist = prev = Q = []
     for i in range(length):
@@ -33,7 +33,7 @@ def Dijkstra(G, s):
 
     return ShortestPath(dist,prev)
 
-def BellmanFord(G, s):
+def bellmanFord(G, s):
     length = len(G)
     dist = prev = []
     for _ in range(length):
@@ -53,6 +53,22 @@ def BellmanFord(G, s):
                     print("ERROR. Graph with negative weight cycle.")
 
     return ShortestPath(dist,prev)
+
+def floydWarshall(G):
+    length = len(G)
+    dist = [[math.inf for i in range(length)] for j in range (length)]
+
+    for i in range(length):
+        for j in range(length):
+            dist[i][j] = G[i][j]
+    
+    for k in range(length):
+        for i in range(length):
+            for j in range(length):
+                if dist[i][j] > dist[i][k] + dist[k][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
+
+    return dist
         
         
 
