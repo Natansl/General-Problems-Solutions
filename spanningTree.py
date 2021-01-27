@@ -8,7 +8,7 @@ def Prim(G, v):
     considered = []
     indexes = []
     connected[v-1] = 1
-    i = v
+    i = v-1
     while connected.count(0) > 0:
         for j in range(V):
             if j == i:
@@ -17,13 +17,12 @@ def Prim(G, v):
                 considered.append(G[i][j])
                 indexes.append([i, j])
 
-        minimum = considered[0]
-        minIndex = 0
-        for k in range (1,len(considered)):
-            if considered[k] < minimum and (not connected[i] or not connected[j]):
+        minimum = math.inf
+        minIndex = math.inf
+        for k in range (len(considered)):
+            if considered[k] < minimum and (not connected[indexes[k][0]] or not connected[indexes[k][1]]):
                 minimum = considered[k]
                 minIndex = k
-
         if connected[indexes[minIndex][0]]:
             i = indexes[minIndex][1]
         else:
@@ -52,13 +51,22 @@ def Kruskal(G):
     indexes, _ = zip(*sorted(enumerate(considered), key=itemgetter(1)))
     i = 0
     while connected.count(0) > 0:
-        curri = idx[indexes[i]][0]
-        currj = idx[indexes[i]][1]
+        curri = idx[indexes.find(i)][0]
+        currj = idx[indexes.find(i)[1]
         if not connected[curri] or not connected[currj]:
             connected[curri] = 1
             connected[currj] = 1
-            Gout[curri][currj] = considered[indexes[i]]
-            Gout[currj][curri] = considered[indexes[i]]
+            Gout[curri][currj] = considered[indexes.find(i)
+            Gout[currj][curri] = considered[indexes.find(i)
         i += 1
 
     return Gout
+
+G = [[0, 9, 75, 0, 0],
+     [9, 0, 95, 19, 42],
+     [75, 95, 0, 51, 66],
+     [0, 19, 51, 0, 31],
+     [0, 42, 66, 31, 0]]
+v = 5
+print("Prim Algorithm: " + str(Prim(G,v)))
+print("Kruskal Algorithm: " + str(Kruskal(G)))
