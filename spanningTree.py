@@ -34,6 +34,8 @@ def Prim(G, v):
         Gout[indexes[minIndex][1]][indexes[minIndex][0]] = minimum
         del considered[minIndex]
         del indexes[minIndex]
+    for i in range(V):
+        Gout[i][i] = 0
     return Gout
 
 def Kruskal(G):
@@ -51,15 +53,16 @@ def Kruskal(G):
     indexes, _ = zip(*sorted(enumerate(considered), key=itemgetter(1)))
     i = 0
     while connected.count(0) > 0:
-        curri = idx[indexes.find(i)][0]
-        currj = idx[indexes.find(i)[1]
+        curri = idx[indexes[i]][0]
+        currj = idx[indexes[i]][1]
         if not connected[curri] or not connected[currj]:
             connected[curri] = 1
             connected[currj] = 1
-            Gout[curri][currj] = considered[indexes.find(i)
-            Gout[currj][curri] = considered[indexes.find(i)
+            Gout[curri][currj] = considered[indexes[i]]
+            Gout[currj][curri] = considered[indexes[i]]
         i += 1
-
+    for i in range(V):
+        Gout[i][i] = 0
     return Gout
 
 G = [[0, 9, 75, 0, 0],
