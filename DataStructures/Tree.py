@@ -5,12 +5,6 @@ class Tree(object):
         self.left = 0
         self.right = 0
 
-    def insertRight(self, node):
-        self.right = node
-
-    def insertLeft(self, node):
-        self.left = node
-
     def binaryInsert(self, node):
         if self.value < node.value:
             if self.right == 0:
